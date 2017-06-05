@@ -1,0 +1,19 @@
+--- b/xbmc/cores/VideoPlayer/VideoPlayerVideo.cpp	2017-05-28 04:45:31.000000000 +1200
++++ b/xbmc/cores/VideoPlayer/VideoPlayerVideo.cpp	2017-06-05 23:45:30.000000000 +1200
+@@ -178,7 +178,15 @@
+   //reported fps is usually not completely correct
+   if (hint.fpsrate && hint.fpsscale)
+   {
+-    m_fFrameRate = DVD_TIME_BASE / CDVDCodecUtils::NormalizeFrameduration((double)DVD_TIME_BASE * hint.fpsscale / hint.fpsrate);
++    if(hint.fpsrate == 500 && hint.fpsscale)
++    {
++        m_fFrameRate = 23.976024;
++    }
++    else
++    {
++        m_fFrameRate = DVD_TIME_BASE / CDVDCodecUtils::NormalizeFrameduration((double)DVD_TIME_BASE * hint.fpsscale / hint.fpsrate);
++    }
++
+     m_bFpsInvalid = false;
+     m_processInfo.SetVideoFps(static_cast<float>(m_fFrameRate));
+   }
