@@ -5,7 +5,7 @@
    if (hint.fpsrate && hint.fpsscale)
    {
 -    m_fFrameRate = DVD_TIME_BASE / CDVDCodecUtils::NormalizeFrameduration((double)DVD_TIME_BASE * hint.fpsscale / hint.fpsrate);
-+    if(hint.fpsrate == 500 && hint.fpsscale)
++    if(hint.fpsrate == 500 && hint.fpsscale == 21)
 +    {
 +        m_fFrameRate = 23.976024;
 +    }
