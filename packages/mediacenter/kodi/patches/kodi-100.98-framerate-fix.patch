@@ -1,23 +1,23 @@
---- a/xbmc/cores/VideoPlayer/VideoPlayer.cpp	2017-05-28 04:45:31.000000000 +1200
-+++ b/xbmc/cores/VideoPlayer/VideoPlayer.cpp	2017-06-05 23:44:15.000000000 +1200
-@@ -3826,7 +3826,19 @@
+--- a/xbmc/cores/VideoPlayer/VideoPlayer.cpp	2017-05-25 08:49:32.000000000 +1200
++++ b/xbmc/cores/VideoPlayer/VideoPlayer.cpp	2017-06-06 16:29:27.887185202 +1200
+@@ -3784,7 +3784,19 @@
    {
-     if (CServiceBroker::GetSettings().GetInt(CSettings::SETTING_VIDEOPLAYER_ADJUSTREFRESHRATE) != ADJUST_REFRESHRATE_OFF)
+     if (CSettings::GetInstance().GetInt(CSettings::SETTING_VIDEOPLAYER_ADJUSTREFRESHRATE) != ADJUST_REFRESHRATE_OFF)
      {
--      double framerate = DVD_TIME_BASE / CDVDCodecUtils::NormalizeFrameduration((double)DVD_TIME_BASE * hint.fpsscale / hint.fpsrate);
-+      double framerate;
-+
+-      float framerate = DVD_TIME_BASE / CDVDCodecUtils::NormalizeFrameduration((double)DVD_TIME_BASE * hint.fpsscale / hint.fpsrate);
++      float framerate;
++ 
 +      if(hint.fpsscale == 21 && hint.fpsrate == 500)
 +      {
-+          framerate = 23.976024;
++        framerate = 23.976024;
 +      }
 +      else
 +      {
-+          framerate = DVD_TIME_BASE / CDVDCodecUtils::NormalizeFrameduration((double)DVD_TIME_BASE * hint.fpsscale / hint.fpsrate);
++        framerate = DVD_TIME_BASE / CDVDCodecUtils::NormalizeFrameduration((double)DVD_TIME_BASE * hint.fpsscale / hint.fpsrate);
 +      }
-+        
-+      CLog::Log(LOGNOTICE, "VideoPlayer: About to TriggerUpdateResoltion. framerate = %f.", framerate);
 +
-       m_renderManager.TriggerUpdateResolution(static_cast<float>(framerate), hint.width, RenderManager::GetStereoModeFlags(hint.stereo_mode));
++      CLog::Log(LOGNOTICE, "VideoPlayer: CVideoPlayer::OpenVideoStream - framerate = %f.", framerate);
++
+       m_renderManager.TriggerUpdateResolution(framerate, hint.width, RenderManager::GetStereoModeFlags(hint.stereo_mode));
      }
    }
