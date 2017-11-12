@@ -1,10 +1,21 @@
 # LibreELEC
 
+This repository holds a custom fork of LibreELEC. It tracks the official LibreELEC releases, but with the following modifications.
+
+* A fix to detect incorrectly tagged 23.976fps content to avoid refresh rate changes after the video has started playing. 
+* OpenSSL replaced with LibreSSL
+
+The fix for 23.976fps content is primarily to aid the playback of Anime which is typically released with invalid scale and rate values. Without this change, playback will initially default to 60fps, and a few seconds later switch the display to 23.976fps once the actual frame rate has been correctly worked out. This causes playback to be interrupted for a few seconds in a very ugly way. It's the files themselves that are at fault, and my fix is a dirty hack, but I preferred to just make LibreELEC just deal with it rather than to have to apply a patch to every faulty MKV I see.
+
+LibreELEC also switched back to use OpenSSL [some time ago](https://github.com/LibreELEC/LibreELEC.tv/pull/1312) due to LibreSSL refusing to validate certificates with a post-2038 expiry date on 32-bit Linux systems. Personally I agree with the LibreSSL maintainers that [this behaviour is correct](https://github.com/libressl-portable/portable/issues/207), I prefer LibreSSL for security reasons, and my player is 64-bit anyway, hence I've stuck with LibreSSL here. So expect these builds will likely run into certificate problems if you make a 32-bit build. Just so you're aware, this difference will also likely make 3rd-party add-ons built for the official LibreELEC builds incompatible with any version built from these sources.
+
+Unless you want/need these specific changes then you're better off sticking to the official LibreELEC repository [here](https://github.com/LibreELEC/LibreELEC.tv). Please do not raise issues or bug reports with the LibreELEC developers for any problems you find in this fork.
+
+I am not associated with the LibreELEC project in any way. If you with to donate to support the project, I'd suggest you donate directly to them. Details below.
+
+**About LibreELEC**
+
 LibreELEC is a 'Just enough OS' Linux distribution for running the award-winning [Kodi](http://kodi.tv) software on popular mediacentre hardware. LibreELEC is a conservative fork of the popular [OpenELEC](http://openelec.tv) project with a stronger focus on pre-release testing and post-release change management. Further information on the project can be found on the [LibreELEC website](https://libreelec.tv).
-
-**Issues & Support**
-
-Please report issues via the [LibreELEC forum: Bug Reports](http://forum.libreelec.tv/forum-35.html). Please ask support questions in the [LibreELEC forum: Help & Support](http://forum.libreelec.tv/forum-3.html) or ask a member of project staff in the #libreelec IRC channel on Freenode.
 
 **Donations**
 
